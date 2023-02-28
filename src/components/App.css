@@ -1,0 +1,25 @@
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  padding: 0;
+  color: var(--main-color);
+}
+
+:root {
+  --main-bg-color: rgb(197, 85, 85);
+  --main-container-bg-color: rgb(227, 113, 113);
+  --break-bg-color: rgb(94, 129, 89);
+  --main-color: white;
+}
+
+.app {
+  max-width: 970px;
+  min-width: 320px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  border-left: 1px solid yellow;
+  border-right: 1px solid yellow;
+}
+

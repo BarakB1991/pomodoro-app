@@ -1,0 +1,7 @@
+.timer-container {
+  background-color: var(--main-container-bg-color);
+  border-radius: 5px;
+  width: 820px;
+  max-width: 95%;
+  margin: 0 auto;
+}
