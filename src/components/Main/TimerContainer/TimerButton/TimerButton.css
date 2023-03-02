@@ -1,0 +1,15 @@
+.button {
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  color: inherit;
+}
+
+.button__secondary {
+  text-align: center;
+  height: 30px;
+}
+
+.button__secondary_clicked {
+  background-color: red;
+}

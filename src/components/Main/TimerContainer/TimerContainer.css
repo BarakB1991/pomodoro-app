@@ -1,7 +1,16 @@
 .timer-container {
   background-color: var(--main-container-bg-color);
   border-radius: 5px;
-  width: 820px;
+  width: 480px;
   max-width: 95%;
+  margin: 30px auto 0;
+}
+
+.timer-container__segment-buttons {
   margin: 0 auto;
+  padding: 20px 0 0;
+  display: grid;
+  width: 75%;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
 }
