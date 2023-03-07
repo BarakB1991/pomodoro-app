@@ -12,10 +12,12 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
+    "source-map-explorer": "^2.5.3",
     "use-sound": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,3 +42,4 @@
     ]
   }
 }
+

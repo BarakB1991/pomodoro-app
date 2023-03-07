@@ -7,9 +7,10 @@ import TimerMeta from './Main/TimerMeta/TimerMeta';
 
 const App = () => {
   const [pomoCount, setPomoCount] = useState(1);
+  const [segment, setSegment] = useState('Pomodoro');
   // eslint-disable-next-line
   const [timerMinutes, setTimerMinutes] = useState({
-    Pomodoro: 0.05,
+    Pomodoro: 25,
     'Short Break': 5,
     'Long Break': 15,
   }); // count times pomodoro been used
@@ -18,17 +19,22 @@ const App = () => {
     setPomoCount((prevCount) => prevCount + 1);
   }, []);
 
+  const handleSegementChange = useCallback((mode) => {
+    setSegment((currentSegment) => (currentSegment = mode));
+  }, []);
+
   return (
     <div className='app'>
       <Header />
       <Main>
         <TimerContainer
           handleIncreasePomoCount={handleIncreasePomoCount}
-          setPomoCount={setPomoCount}
           pomoCount={pomoCount}
+          segment={segment}
+          onSegmentChange={handleSegementChange}
           timerMinutes={timerMinutes}
         />
-        <TimerMeta pomoCount={pomoCount} />
+        <TimerMeta pomoCount={pomoCount} segment={segment} />
       </Main>
     </div>
   );

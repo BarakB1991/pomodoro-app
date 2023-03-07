@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useSound from 'use-sound';
 import './OnOffButton.css';
 import onClick from '../../../../sounds/on-click.mp3';

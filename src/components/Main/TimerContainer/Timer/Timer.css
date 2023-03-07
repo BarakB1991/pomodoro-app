@@ -1,6 +1,12 @@
 .timer__display {
   font-size: 120px;
   font-weight: bold;
-  margin: 0;
+  margin: 20px 0 0;
   padding: 0;
+}
+
+@media only screen and (max-width: 380px) {
+  .timer__display {
+    font-size: 80px;
+  }
 }

@@ -10,18 +10,29 @@ import startSound from '../../../sounds/start-timer.mp3';
 import { BsFillSkipEndFill } from 'react-icons/bs';
 
 const TimerContainer = ({
-  setPomoCount,
   pomoCount,
   handleIncreasePomoCount,
+  segment,
+  onSegmentChange,
   timerMinutes,
 }) => {
   const buttonsContainerRef = useRef(null);
-  const [count, setCount] = useState(1);
-  const [segment, setSegment] = useState('Pomodoro');
+  const [count, setCount] = useState(60 * timerMinutes['Pomodoro']);
   const [intervalID, setIntervalID] = useState(null);
   const [isSmallerButtons, setIsSmallerButtons] = useState(false);
 
-  // console.log(buttonsContainerRef.current);
+  const [playON] = useSound(onClick, {
+    volume: 0.5,
+  });
+
+  const [playFinishTimer] = useSound(finishSound, {
+    volume: 0.5,
+  });
+
+  const [playStartTimer] = useSound(startSound, {
+    volume: 0.5,
+  });
+
   useEffect(() => {
     if (!buttonsContainerRef.current) return;
 
@@ -38,18 +49,6 @@ const TimerContainer = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [playON] = useSound(onClick, {
-    volume: 0.5,
-  });
-
-  const [playFinishTimer] = useSound(finishSound, {
-    volume: 0.5,
-  });
-
-  const [playStartTimer] = useSound(startSound, {
-    volume: 0.5,
-  });
-
   const removeInterval = useCallback(() => {
     clearInterval(intervalID);
     setIntervalID(null);
@@ -61,22 +60,19 @@ const TimerContainer = ({
 
   const handleButtonClick = useCallback(
     (mode) => {
-      console.log("I'm in handleButtonClick");
-      setCount(60 * timerMinutes[mode]);
+      setCount((prevCount) => (prevCount = 60 * timerMinutes[mode]));
       if (
         intervalID
         // && !isAutoStart
       )
         removeInterval();
 
-      setSegment(mode);
+      onSegmentChange(mode);
     },
-    [timerMinutes, removeInterval, intervalID],
+    [timerMinutes, removeInterval, intervalID, onSegmentChange],
   );
 
   const changeSegmentBasedOnPomodoros = useCallback(() => {
-    console.log('56pomoCount: ' + pomoCount);
-
     pomoCount % 4 === 0 && pomoCount !== 0
       ? handleButtonClick('Long Break')
       : handleButtonClick('Short Break');
@@ -93,16 +89,16 @@ const TimerContainer = ({
     }, 1000);
 
     setIntervalID(() => myInterval);
-    console.log('intervalID(inHOOBf): ' + intervalID);
   };
 
   const handleSkipClick = () => {
     playON();
-    if (segment === 'Short Break' || segment === 'Long Break')
+    if (segment === 'Short Break' || segment === 'Long Break') {
       return handleButtonClick('Pomodoro');
+    }
     changeSegmentBasedOnPomodoros();
     //  only if timer is running account for the pomodoro
-    intervalID && setPomoCount((prevCount) => prevCount + 1);
+    intervalID && handleIncreasePomoCount();
   };
 
   const formattedTime = new Date(count * 1000).toISOString().substr(14, 5);
@@ -129,8 +125,8 @@ const TimerContainer = ({
     segment,
     timerMinutes,
     removeInterval,
-    changeSegmentBasedOnPomodoros,
     handleButtonClick,
+    changeSegmentBasedOnPomodoros,
     // isAutoStart,
   ]);
 

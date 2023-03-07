@@ -20,7 +20,7 @@
 
 .timer-container__play-buttons {
   margin: 0 auto;
-  padding: 20px 0 0;
+  padding: 20px 0 30px;
   display: grid;
   width: 85%;
   grid-template-columns: repeat(3, 1fr);

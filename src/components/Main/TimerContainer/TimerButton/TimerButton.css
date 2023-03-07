@@ -13,8 +13,8 @@
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
+  font-weight: 400;
   display: inline-block;
-  font-weight: bold;
 }
 
 .button__secondary:active {
@@ -23,7 +23,8 @@
 }
 
 .button__secondary_clicked {
-  background-color: rgba(197, 85, 87, 0.57);
+  font-weight: bold;
+  background-color: rgba(197, 85, 87, 0.87);
 }
 
 .button__skip {
