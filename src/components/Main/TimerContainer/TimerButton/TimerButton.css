@@ -6,10 +6,27 @@
 }
 
 .button__secondary {
+  position: relative;
   text-align: center;
   height: 30px;
+  font-size: 16px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.button__secondary:active {
+  top: 1.6px;
+  position: relative;
 }
 
 .button__secondary_clicked {
-  background-color: red;
+  background-color: rgba(197, 85, 87, 0.57);
+}
+
+.button__skip {
+  width: 36px;
+  grid-column: 3/4;
 }

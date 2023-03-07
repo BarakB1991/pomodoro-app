@@ -4,6 +4,7 @@
   width: 480px;
   max-width: 95%;
   margin: 30px auto 0;
+  position: relative;
 }
 
 .timer-container__segment-buttons {
@@ -12,5 +13,17 @@
   display: grid;
   width: 75%;
   grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
   justify-items: center;
+  position: relative;
+}
+
+.timer-container__play-buttons {
+  margin: 0 auto;
+  padding: 20px 0 0;
+  display: grid;
+  width: 85%;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  position: relative;
 }

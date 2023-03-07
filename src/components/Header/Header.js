@@ -4,9 +4,11 @@ import Settings from './Settings/Settings';
 
 const Header = () => {
   return (
-    <header>
+    <header className='header'>
       <h1 className='header__title'>Pomodoro</h1>
-      <Settings />
+      <div>
+        <Settings />
+      </div>
     </header>
   );
 };

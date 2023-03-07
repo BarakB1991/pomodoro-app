@@ -5,6 +5,22 @@
   color: var(--main-container-bg-color);
   background-color: white;
   font-size: 23px;
+  font-weight: bold;
   width: 200px;
   height: 55px;
+  grid-column: 2/3;
+}
+
+.button__primary_active {
+  position: relative;
+  top: 6px;
+  box-shadow: rgb(235 188 208) 0px 0px 0px;
+}
+
+@media only screen and (max-width: 380px) {
+  .button__primary {
+    font-size: 18px;
+    width: 165px;
+    height: 50px;
+  }
 }

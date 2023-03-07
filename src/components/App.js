@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react';
-import '../vendor/normalize.css';
 import './App.css';
+import { useCallback, useState } from 'react';
 import Header from './Header/Header';
 import Main from './Main/Main';
 import TimerContainer from './Main/TimerContainer/TimerContainer';
@@ -11,8 +10,8 @@ const App = () => {
   // eslint-disable-next-line
   const [timerMinutes, setTimerMinutes] = useState({
     Pomodoro: 0.05,
-    Break: 0.05,
-    'Long Break': 0.05,
+    'Short Break': 5,
+    'Long Break': 15,
   }); // count times pomodoro been used
 
   const handleIncreasePomoCount = useCallback(() => {

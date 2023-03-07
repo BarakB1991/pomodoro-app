@@ -1,17 +1,17 @@
 import './TimerButton.css';
-import React from 'react';
+import classNames from 'classnames';
 
-const TimerButton = ({ name, onButtonClick, clickedButton = '' }) => {
+const TimerButton = ({ name, children, onChange, active, className }) => {
+  const classes = classNames('button', className, {
+    button__secondary_clicked: active,
+  });
   const handleClick = () => {
-    onButtonClick(name);
+    onChange(name);
   };
 
   return (
-    <button
-      className={`button button__secondary ${clickedButton}`}
-      onClick={handleClick}
-    >
-      {name}
+    <button type='button' className={classes} onClick={handleClick}>
+      {children}
     </button>
   );
 };

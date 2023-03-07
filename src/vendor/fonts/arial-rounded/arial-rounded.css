@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'ArialRounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('ArialRounded'),
+    url('./Arial-Rounded-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'ArialRounded';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: local('ArialRounded'), url('./Arial-Rounded-Bold.ttf') format('truetype');
+}
+
