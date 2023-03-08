@@ -6,13 +6,13 @@ import TimerContainer from './Main/TimerContainer/TimerContainer';
 import TimerMeta from './Main/TimerMeta/TimerMeta';
 
 const App = () => {
-  const [pomoCount, setPomoCount] = useState(1);
+  const [pomoCount, setPomoCount] = useState(0);
   const [segment, setSegment] = useState('Pomodoro');
   // eslint-disable-next-line
   const [timerMinutes, setTimerMinutes] = useState({
-    Pomodoro: 25,
-    'Short Break': 5,
-    'Long Break': 15,
+    Pomodoro: 0.05,
+    'Short Break': 0.05,
+    'Long Break': 0.05,
   }); // count times pomodoro been used
 
   const handleIncreasePomoCount = useCallback(() => {
@@ -20,7 +20,7 @@ const App = () => {
   }, []);
 
   const handleSegementChange = useCallback((mode) => {
-    setSegment((currentSegment) => (currentSegment = mode));
+    setSegment(mode);
   }, []);
 
   return (

@@ -17,7 +17,10 @@ const TimerContainer = ({
   timerMinutes,
 }) => {
   const buttonsContainerRef = useRef(null);
-  const [count, setCount] = useState(60 * timerMinutes['Pomodoro']);
+  const [count, setCount] = useState(
+    // 60 * timerMinutes['Pomodoro']
+    1,
+  );
   const [intervalID, setIntervalID] = useState(null);
   const [isSmallerButtons, setIsSmallerButtons] = useState(false);
 
@@ -64,16 +67,18 @@ const TimerContainer = ({
       if (
         intervalID
         // && !isAutoStart
-      )
+      ) {
         removeInterval();
-
+      }
       onSegmentChange(mode);
     },
     [timerMinutes, removeInterval, intervalID, onSegmentChange],
   );
 
   const changeSegmentBasedOnPomodoros = useCallback(() => {
-    pomoCount % 4 === 0 && pomoCount !== 0
+    console.log(pomoCount);
+
+    (pomoCount + 1) % 4 === 0 && pomoCount !== 0
       ? handleButtonClick('Long Break')
       : handleButtonClick('Short Break');
   }, [handleButtonClick, pomoCount]);
@@ -109,8 +114,9 @@ const TimerContainer = ({
       removeInterval();
       setCount((prevCount) => prevCount + 1);
       if (segment === 'Pomodoro') {
-        changeSegmentBasedOnPomodoros();
+        window.timeOne = performance.now();
         increasePomo();
+        changeSegmentBasedOnPomodoros();
         playFinishTimer();
       } else if (segment === 'Short Break' || segment === 'Long Break') {
         handleButtonClick('Pomodoro');
