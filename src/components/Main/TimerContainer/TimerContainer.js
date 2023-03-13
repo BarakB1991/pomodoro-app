@@ -18,7 +18,7 @@ const TimerContainer = ({
   timerMinutes,
 }) => {
   const buttonsContainerRef = useRef(null);
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(1500);
   const [intervalID, setIntervalID] = useState(null);
   const [isSmallerButtons, setIsSmallerButtons] = useState(false);
 

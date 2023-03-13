@@ -10,10 +10,10 @@ const App = () => {
   const [segment, setSegment] = useState('Pomodoro');
   // eslint-disable-next-line
   const [timerMinutes, setTimerMinutes] = useState({
-    Pomodoro: 0.05,
-    'Short Break': 0.05,
-    'Long Break': 0.05,
-  }); // count times pomodoro been used
+    Pomodoro: 25,
+    'Short Break': 5,
+    'Long Break': 15,
+  });
 
   const handleIncreasePomoCount = useCallback(() => {
     setPomoCount((prevCount) => prevCount + 1);
