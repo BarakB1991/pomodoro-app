@@ -5,6 +5,7 @@ const TimerButton = ({ name, children, onChange, active, className }) => {
   const classes = classNames('button', className, {
     button__secondary_clicked: active,
   });
+
   const handleClick = () => {
     onChange(name);
   };

@@ -8,6 +8,7 @@ import onClick from '../../../sounds/on-click.mp3';
 import finishSound from '../../../sounds/finish-timer.mp3';
 import startSound from '../../../sounds/start-timer.mp3';
 import { BsFillSkipEndFill } from 'react-icons/bs';
+import useTitle from '../../../helpers/useTitle';
 
 const TimerContainer = ({
   pomoCount,
@@ -17,10 +18,7 @@ const TimerContainer = ({
   timerMinutes,
 }) => {
   const buttonsContainerRef = useRef(null);
-  const [count, setCount] = useState(
-    // 60 * timerMinutes['Pomodoro']
-    1,
-  );
+  const [count, setCount] = useState(2);
   const [intervalID, setIntervalID] = useState(null);
   const [isSmallerButtons, setIsSmallerButtons] = useState(false);
 
@@ -35,6 +33,8 @@ const TimerContainer = ({
   const [playStartTimer] = useSound(startSound, {
     volume: 0.5,
   });
+
+  useTitle({ segment, intervalID });
 
   useEffect(() => {
     if (!buttonsContainerRef.current) return;
@@ -106,8 +106,6 @@ const TimerContainer = ({
     intervalID && handleIncreasePomoCount();
   };
 
-  const formattedTime = new Date(count * 1000).toISOString().substr(14, 5);
-
   useEffect(() => {
     if (count === -1) {
       // !isAutoStart &&
@@ -167,7 +165,7 @@ const TimerContainer = ({
           {!isSmallerButtons ? 'Long Break' : 'Long'}
         </Button>
       </div>
-      <Timer time={formattedTime} />
+      <Timer count={count} />
       <div className='timer-container__play-buttons'>
         <OnOffButton
           onButtonClick={handleOnOffButton}
