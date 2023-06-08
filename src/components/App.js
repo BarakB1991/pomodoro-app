@@ -10,9 +10,9 @@ const App = () => {
   const [segment, setSegment] = useState('Pomodoro');
   // eslint-disable-next-line
   const [timerMinutes, setTimerMinutes] = useState({
-    Pomodoro: 25,
-    'Short Break': 5,
-    'Long Break': 15,
+    Pomodoro: 0.03,
+    'Short Break': 0.03,
+    'Long Break': 0.03,
   });
 
   const handleIncreasePomoCount = useCallback(() => {

@@ -1,14 +1,12 @@
 import './TimerContainer.css';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from './TimerButton/TimerButton';
 import Timer from './Timer/Timer';
 import OnOffButton from './OnOffButton/OnOffButton';
-import useSound from 'use-sound';
-import onClick from '../../../sounds/on-click.mp3';
-import finishSound from '../../../sounds/finish-timer.mp3';
-import startSound from '../../../sounds/start-timer.mp3';
-import { BsFillSkipEndFill } from 'react-icons/bs';
 import useTitle from '../../../helpers/useTitle';
+import useTimer from '../../../helpers/useTimer';
+import useWindowResize from '../../../helpers/useWindowResize';
+import { BsFillSkipEndFill } from 'react-icons/bs';
 
 const TimerContainer = ({
   pomoCount,
@@ -17,122 +15,33 @@ const TimerContainer = ({
   onSegmentChange,
   timerMinutes,
 }) => {
-  const buttonsContainerRef = useRef(null);
-  const [count, setCount] = useState(1500);
-  const [intervalID, setIntervalID] = useState(null);
+  const initialCount = 1500;
+  const {
+    count,
+    intervalID,
+    handleButtonClick,
+    handleOnOffButton,
+    handleSkipClick,
+  } = useTimer(
+    initialCount,
+    timerMinutes,
+    segment,
+    onSegmentChange,
+    handleIncreasePomoCount,
+    pomoCount,
+  );
   const [isSmallerButtons, setIsSmallerButtons] = useState(false);
-
-  const [playON] = useSound(onClick, {
-    volume: 0.5,
-  });
-
-  const [playFinishTimer] = useSound(finishSound, {
-    volume: 0.5,
-  });
-
-  const [playStartTimer] = useSound(startSound, {
-    volume: 0.5,
-  });
+  const buttonsContainerRef = useRef(null);
 
   useTitle({ segment, intervalID });
 
-  useEffect(() => {
-    if (!buttonsContainerRef.current) return;
+  useWindowResize(buttonsContainerRef, setIsSmallerButtons);
 
-    function handleResize() {
-      if (buttonsContainerRef.current.offsetWidth < 333) {
-        setIsSmallerButtons((currentState) => (currentState = true));
-      } else {
-        setIsSmallerButtons((currentState) => (currentState = false));
-      }
-    }
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const removeInterval = useCallback(() => {
-    clearInterval(intervalID);
-    setIntervalID(null);
-  }, [intervalID]);
-
-  const increasePomo = useCallback(() => {
-    handleIncreasePomoCount();
-  }, [handleIncreasePomoCount]);
-
-  const handleButtonClick = useCallback(
-    (mode) => {
-      setCount((prevCount) => (prevCount = 60 * timerMinutes[mode]));
-      if (
-        intervalID
-        // && !isAutoStart
-      ) {
-        removeInterval();
-      }
-      onSegmentChange(mode);
-    },
-    [timerMinutes, removeInterval, intervalID, onSegmentChange],
-  );
-
-  const changeSegmentBasedOnPomodoros = useCallback(() => {
-    console.log(pomoCount);
-
-    (pomoCount + 1) % 4 === 0 && pomoCount !== 0
-      ? handleButtonClick('Long Break')
-      : handleButtonClick('Short Break');
-  }, [handleButtonClick, pomoCount]);
-
-  const handleOnOffButton = () => {
-    if (intervalID) {
-      removeInterval();
-      return;
-    }
-
-    const myInterval = setInterval(() => {
-      setCount((prevCount) => prevCount - 1);
-    }, 1000);
-
-    setIntervalID(() => myInterval);
+  const modeNames = {
+    Pomodoro: 'Pomo',
+    'Short Break': 'Short',
+    'Long Break': 'Long',
   };
-
-  const handleSkipClick = () => {
-    playON();
-    if (segment === 'Short Break' || segment === 'Long Break') {
-      return handleButtonClick('Pomodoro');
-    }
-    changeSegmentBasedOnPomodoros();
-    //  only if timer is running account for the pomodoro
-    intervalID && handleIncreasePomoCount();
-  };
-
-  useEffect(() => {
-    if (count === -1) {
-      // !isAutoStart &&
-      removeInterval();
-      setCount((prevCount) => prevCount + 1);
-      if (segment === 'Pomodoro') {
-        window.timeOne = performance.now();
-        increasePomo();
-        changeSegmentBasedOnPomodoros();
-        playFinishTimer();
-      } else if (segment === 'Short Break' || segment === 'Long Break') {
-        handleButtonClick('Pomodoro');
-        playStartTimer();
-      }
-    }
-  }, [
-    increasePomo,
-    count,
-    playFinishTimer,
-    playStartTimer,
-    segment,
-    timerMinutes,
-    removeInterval,
-    handleButtonClick,
-    changeSegmentBasedOnPomodoros,
-    // isAutoStart,
-  ]);
 
   return (
     <div className='timer-container'>
@@ -140,30 +49,17 @@ const TimerContainer = ({
         ref={buttonsContainerRef}
         className='timer-container__segment-buttons'
       >
-        <Button
-          name={'Pomodoro'}
-          className='button__secondary'
-          onChange={handleButtonClick}
-          active={segment === 'Pomodoro' && true}
-        >
-          {!isSmallerButtons ? 'Pomodoro' : 'Pomo'}
-        </Button>
-        <Button
-          name={'Short Break'}
-          className='button__secondary'
-          onChange={handleButtonClick}
-          active={segment === 'Short Break' && true}
-        >
-          {!isSmallerButtons ? 'Short Break' : 'Short'}
-        </Button>
-        <Button
-          name={'Long Break'}
-          className='button__secondary'
-          onChange={handleButtonClick}
-          active={segment === 'Long Break' && true}
-        >
-          {!isSmallerButtons ? 'Long Break' : 'Long'}
-        </Button>
+        {['Pomodoro', 'Short Break', 'Long Break'].map((mode) => (
+          <Button
+            key={mode}
+            name={mode}
+            className='button__secondary'
+            onChange={handleButtonClick}
+            active={segment === mode}
+          >
+            {!isSmallerButtons ? mode : modeNames[mode]}
+          </Button>
+        ))}
       </div>
       <Timer count={count} />
       <div className='timer-container__play-buttons'>

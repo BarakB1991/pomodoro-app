@@ -12,9 +12,10 @@ const OnOffButton = ({ name, onButtonClick, intervalID }) => {
   const [playOFF] = useSound(offClick, {
     volume: 0.5,
   });
-
+  console.dir(playON);
   const handleClick = () => {
     onButtonClick(name);
+    debugger;
     intervalID ? playON() : playOFF();
   };
 
